@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Letter Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Generate Verification Letter</h1>
+    <input type="text" id="name" placeholder="Recipient Name" required>
+    <input type="text" id="email" placeholder="Recipient Email" required>
+    <textarea id="message" placeholder="Enter message..." required></textarea>
+    <button id="generate">Generate Letter</button>
+</div>
+
+<script>
+    document.getElementById('generate').addEventListener('click', function() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        fetch('/generate-letter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, message }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Letter Generated! Check console for details.');
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+</body>
+</html>
